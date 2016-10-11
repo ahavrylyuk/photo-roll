@@ -1,12 +1,21 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import styles from './index.less'
 
 export default class Layout extends Component {
+  static propTypes = {
+    children: PropTypes.node.isRequired,
+    number: PropTypes.number,
+    string: PropTypes.string
+  }
 
   render() {
-    const { a, b } = { a: 1, b: 'text' }
+    const { number, string, children } = this.props
     return (
-      <div className={styles.root}>Test {a} {b}</div>
+      <div>
+        Content {number} {string}
+        <div className={styles.root}>{children}</div>
+        <div>Footer</div>
+      </div>
     )
   }
 }

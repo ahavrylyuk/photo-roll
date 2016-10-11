@@ -1,7 +1,6 @@
 const { join } = require('path')
 const webpack = require('webpack')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
-  // const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const autoprefixer = require('autoprefixer')
 
@@ -24,7 +23,6 @@ const plugins = (isProduction ? optimizationPlugins : []).concat([
   new HtmlWebpackPlugin({
     template: join(app, 'index.html')
   })
-  // new CopyWebpackPlugin([{ from: `${app}/**/*.html`, to: dist, flatten: true }])
 ])
 
 module.exports = {
@@ -34,7 +32,9 @@ module.exports = {
   },
   output: {
     path: dist,
-    filename: '[name]-[hash].js'
+    filename: '[name]-[hash].js',
+    libraryTarget: 'var',
+    library: 'Layout'
   },
   module: {
     preLoaders: [
