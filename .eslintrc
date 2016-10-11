@@ -9,13 +9,13 @@
         "jsx-a11y",
         "import"
     ],
+    "settings": {
+      "import/resolver": "webpack"
+    },
     "rules": {
         "indent": ["error", 2],
         "comma-dangle": ["error", "never"],
         "semi": ["error", "never"],
-        "import/no-extraneous-dependencies": ["error", {}],
-        "react/prefer-stateless-function": 0,
-        "react/self-closing-comp": 0,
-        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
+        "react/prefer-stateless-function": 0
     }
 }

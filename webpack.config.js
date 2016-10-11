@@ -1,3 +1,4 @@
+/* eslint-disable */
 const { join } = require('path')
 const webpack = require('webpack')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
@@ -28,13 +29,17 @@ const plugins = (isProduction ? optimizationPlugins : []).concat([
 module.exports = {
   devtool: !isProduction && 'eval-source-map',
   entry: {
-    index: [join(app, 'index.js')]
+    index: [join(app, 'index.jsx')]
   },
   output: {
     path: dist,
     filename: '[name]-[hash].js',
     libraryTarget: 'var',
     library: 'Layout'
+  },
+  resolve: {
+    modulesDirectories: ['shared', 'node_modules'],
+    extensions: ['', '.js', '.jsx', '.json']
   },
   module: {
     preLoaders: [
