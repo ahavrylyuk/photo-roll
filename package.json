@@ -4,37 +4,46 @@
   "description": "",
   "scripts": {
     "install": "node .bin/install",
-    "start": "webpack-dev-server --content-base ./client",
-    "lint": "eslint .",
-    "test": "lab -L ./test"
+    "build": "webpack",
+    "build:prod": "cross-env NODE_ENV=production npm run build",
+    "build:dev": "cross-env NODE_ENV=development npm run build",
+    "start": "parallelshell \"npm run build:dev -- --watch\" \"lite-server -c lite-server.json\"",
+    "lint": "eslint ."
   },
-  "keywords": [
-    "photos",
-    "es6",
-    "node"
-  ],
-  "author": "Andriy Havrylyuk <andriy.havrylyuk@gmail.com>",
+  "author": "",
   "license": "ISC",
   "dependencies": {
-    "git-validate": "^2.2.1"
+    "git-validate": "^2.2.2",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2"
   },
   "devDependencies": {
-    "babel-core": "^6.14.0",
+    "autoprefixer": "^6.5.0",
+    "babel-core": "^6.17.0",
     "babel-loader": "^6.2.5",
-    "babel-preset-es2015": "^6.14.0",
-    "eslint": "^3.4.0",
-    "eslint-config-airbnb": "^10.0.1",
-    "eslint-plugin-import": "^1.14.0",
-    "eslint-plugin-jsx-a11y": "^2.2.1",
-    "eslint-plugin-react": "^6.2.0",
+    "babel-preset-es2015": "^6.16.0",
+    "babel-preset-react": "^6.16.0",
+    "babel-preset-stage-0": "^6.16.0",
+    "clean-webpack-plugin": "^0.1.13",
+    "copy-webpack-plugin": "^3.0.1",
+    "cross-env": "^3.1.2",
+    "css-loader": "^0.25.0",
+    "eslint": "^3.7.1",
+    "eslint-config-airbnb": "^12.0.0",
+    "eslint-loader": "^1.5.0",
+    "eslint-plugin-import": "^1.16.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-react": "^6.4.0",
     "html-webpack-plugin": "^2.22.0",
-    "lab": "^11.0.1",
-    "pug-loader": "^2.3.0",
-    "webpack": "^1.13.2",
-    "webpack-dev-server": "^1.15.1"
+    "less": "^2.7.1",
+    "less-loader": "^2.2.3",
+    "lite-server": "^2.2.2",
+    "parallelshell": "^2.0.0",
+    "postcss-loader": "^0.13.0",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.13.2"
   },
   "pre-commit": [
-    "lint",
-    "test"
+    "lint"
   ]
 }

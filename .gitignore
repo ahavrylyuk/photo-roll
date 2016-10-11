@@ -138,7 +138,7 @@ fabric.properties
 
 # *.iml
 # modules.xml
-# .idea/misc.xml 
+# .idea/misc.xml
 # *.ipr
 
 
@@ -184,3 +184,6 @@ jspm_packages
 
 # Optional REPL history
 .node_repl_history
+
+dist
+build

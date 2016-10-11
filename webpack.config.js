@@ -1,23 +1,61 @@
-const webpack = require('webpack'); // eslint-disable-line
-const HtmlWebpackPlugin = require('html-webpack-plugin'); // eslint-disable-line
+const { join } = require('path')
+const webpack = require('webpack')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
+  // const CopyWebpackPlugin = require('copy-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const autoprefixer = require('autoprefixer')
+
+const app = join(__dirname, 'app')
+const dist = join(__dirname, 'dist')
+
+const isProduction = process.env.NODE_ENV === 'production'
+
+const optimizationPlugins = [
+  new webpack.optimize.DedupePlugin(),
+  new webpack.optimize.UglifyJsPlugin({
+    compress: {
+      warnings: false
+    }
+  })
+]
+
+const plugins = (isProduction ? optimizationPlugins : []).concat([
+  new CleanWebpackPlugin([dist]),
+  new HtmlWebpackPlugin({
+    template: join(app, 'index.html')
+  })
+  // new CopyWebpackPlugin([{ from: `${app}/**/*.html`, to: dist, flatten: true }])
+])
 
 module.exports = {
-  entry: './client/app/app.js',
+  devtool: !isProduction && 'eval-source-map',
+  entry: {
+    index: [join(app, 'index.js')]
+  },
   output: {
-    filename: 'app.bundle.js',
+    path: dist,
+    filename: '[name]-[hash].js'
   },
   module: {
+    preLoaders: [
+      {
+        test: /\.(js|jsx)$/,
+        loader: 'eslint',
+        include: app
+      }
+    ],
     loaders: [{
-      test: /\.js$/,
+      test: /\.(js|jsx)$/,
       exclude: /node_modules/,
-      loader: 'babel-loader',
-    }],
+      loader: 'babel',
+      query: {
+        presets: ['react', 'es2015', 'stage-0']
+      }
+    }, {
+      test: /\.less$/,
+      loader: 'style!css?modules&localIdentName=[name]__[local]___[hash:base64:5]!postcss!less'
+    }]
   },
-  plugins: [
-    new webpack.SourceMapDevToolPlugin(),
-    new webpack.optimize.UglifyJsPlugin(),
-    new HtmlWebpackPlugin({
-      template: './client/index.html',
-    }),
-  ],
-};
+  postcss: [autoprefixer],
+  plugins
+}
